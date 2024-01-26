@@ -4,6 +4,7 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import string
 
 def generate_random_number():
     return str(random.randint(10000000, 99999999))
@@ -93,6 +94,17 @@ def end_verification(request):
                     'registered_user':'Email não cadastrado'
         }
         return render(request, 'users/register.html', context)
+    
+def change_password(request):
+    user_password = request.POST.get('password')
+    user_email = request.POST.get('email')
+    users.objects.filter(email=user_email).update(password=user_password)
+    users.objects.filter(email=user_email).update(temp_password='00000000')
+    context = {
+        'response':'Senha alterada'
+    }
+    return render(request, 'users/loginpage.html', context)
+
 
 def homepage(request):
     user_email = request.POST.get('email')
@@ -100,26 +112,37 @@ def homepage(request):
 
     reference_user = users.objects.filter(email=user_email).first()
 
-    if reference_user:
-        if reference_user.email == user_email and reference_user.password == user_password:
-            if reference_user.verified == 1:
-                return render(request,'users/homepage.html')
+    if user_password == reference_user.temp_password:
+        context = {
+            'email':user_email
+        }
+        return render(request, 'users/change_password.html',context)
+    else:
+        if reference_user:
+            if reference_user.email == user_email and reference_user.password == user_password:
+                if reference_user.verified == 1:
+                    return render(request,'users/homepage.html')
+                else:
+                    context = {
+                        'registered_user':'Código de verificação incorreto, cadastre novamente'
+                    }
+                    users.objects.filter(email=user_email).delete()
+                    return render(request, 'users/register.html', context)
             else:
                 context = {
-                    'registered_user':'Código de verificação incorreto, cadastre novamente'
+                    'response':'Senha ou Email errado, digite novamente'
                 }
-                users.objects.filter(email=user_email).delete()
-                return render(request, 'users/register.html', context)
+                return render(request,'users/loginpage.html',context)
         else:
-            context = {
-                'response':'Senha ou Email errado, digite novamente'
-            }
-            return render(request,'users/loginpage.html',context)
-    else:
-        return render(request, 'users/register.html', {'registered_user': 'Email não cadastrado'})
+            return render(request, 'users/register.html', {'registered_user': 'Email não cadastrado'})
 
 def forgot_password(request):
     return render(request, 'users/forgot_password.html')
+
+def gen_temp_password():
+    char = string.ascii_letters + string.digits
+    return ''.join(random.choice(char) for _ in range(8))
+
 
 def request_to_recover_password(request):
     user_email = request.POST.get('email')
@@ -127,7 +150,10 @@ def request_to_recover_password(request):
 
     if reference_user:
         if reference_user.verified == 1:
-            send_email(user_email,'Recuperar senha',f'Ola aqui está a sua senha: {reference_user.password}')
+            temp_password = gen_temp_password()
+            users.objects.filter(email=user_email).update(password=temp_password)
+            users.objects.filter(email=user_email).update(temp_password=temp_password)
+            send_email(user_email,'Recuperar senha',f'Ola aqui está a sua senha provisória: {temp_password}')
             context = {
                 'response':'Acesse o seu email para recuperar a senha'
             }

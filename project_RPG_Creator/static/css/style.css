@@ -57,6 +57,20 @@ body{
     transition: .5s;
 }
 
+#button{
+    border: none;
+    background-color: transparent;
+    color: #111;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .5s;
+}
+#button:hover{
+    color: #6a40da;
+    transition: .5s;
+}
+
 input:focus {
     outline: none;
     border: none;

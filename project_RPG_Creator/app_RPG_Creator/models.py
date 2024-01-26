@@ -6,3 +6,4 @@ class users(models.Model):
     password = models.TextField(max_length=20)
     verified = models.IntegerField(max_length=1)
     code = models.IntegerField(max_length=8)
+    temp_password = models.TextField(max_length=8, default='00000000')
