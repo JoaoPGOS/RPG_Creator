@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+
+*{
+    font-family: 'Roboto Mono', monospace;
+}
+body{
+    background: linear-gradient(#6a40da,#a875ff);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_login{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 30px;
+    width: 400px;
+    border-radius: 20px;
+    color: #111;
+    align-items: center;
+    gap: 1rem;
+}
+.container_login form{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 1rem;
+    align-items: center;
+}
+.container_login form input[type="email"], .container_login form input[type="password"]{
+    border: none;
+    border-bottom: #111 solid 1px;
+    width: 300px;
+    padding: 10px;
+}
+
+.container_login form input[type="submit"]{
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    width: fit-content;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.container_login form input[type="submit"]:hover{
+    background-color: transparent;
+    color: #6a40da;
+    transition: .5s;
+}
+
+input:focus {
+    outline: none;
+    border: none;
+}
+
+.container_login a{
+    font-size: bold;
+    font-size: 16px;
+    text-decoration: none;
+    transition: .5s;
+    color: grey;
+}
+.container_login a:hover{
+    color: #6a40da;
+}
+.adalgas {
+    width: 70px;
+}
