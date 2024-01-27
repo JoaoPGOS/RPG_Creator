@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root{
+    --color-primary:#6a40da;
+    --color-background:white;
+    --color-diff:grey;
+    --color-text:#111;
+}
+
+
+.theme-switch {
+    border: solid 2px var(--color-primary);
+    width: 60px;
+    border-radius: 30px;
+    padding: 2px;
+}
+
+.theme-switch input[type="checkbox"] {
+    display: none;
+}
+
+.theme-switch label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: var(--color-diff-light);
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.theme-switch label:after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+}
+
+.theme-switch input[type="checkbox"]:checked + label {
+    background-color: var(--color-diff-dark);
+}
+
+.theme-switch input[type="checkbox"]:checked + label:after {
+    transform: translateX(30px);
+}
+
+*{
+    font-family: 'Roboto Mono', monospace;
+}
+body{
+    background: linear-gradient(#6a40da,#a875ff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-background);
+    position: fixed;
+    width: 1000px;
+    top: 1.5%;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    justify-content: space-between;
+}
+.navbar svg{
+    color: var(--color-primary);
+    cursor: pointer;
+}
+.list{
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    padding: 10px;
+    border-radius: 15px;
+    justify-content: space-between;
+    border: none;
+    position: relative;
+    background-color: var(--color-background);
+    height: fit-content;
+    top: 1%;
+    z-index: -1;
+    transition: .5s;
+}
+.list svg{
+    color: var(--color-primary);
+    cursor: pointer;
+}
+.list a{
+    font-weight: bold;
+    color: var(--color-text);
+    transition: .5s;
+    text-decoration: none;
+}
+.list a:hover{
+    color: var(--color-primary);
+    transition: .5s;
+}
